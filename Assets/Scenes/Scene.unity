@@ -40778,6 +40778,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1906109301}
+    - targetCorrespondingSourceObject: {fileID: 1952885625118824, guid: 10899ca432e87ce4eb8f93c0c7216a21,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1906109308}
   m_SourcePrefab: {fileID: 100100000, guid: 10899ca432e87ce4eb8f93c0c7216a21, type: 3}
 --- !u!4 &745964892 stripped
 Transform:
@@ -102081,6 +102085,26 @@ MonoBehaviour:
   blendAmount: 0.3
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   maxDistance: 100
+--- !u!114 &1906109308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906109285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08a91e28da52224da5613bc065684ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 8f2da7db70f62204f9ec2bea86167df3, type: 2}
+  master: Master
+  music: Music
+  sfx: SFX
+  vo: VO
+  stepsize: 1
+  minimvolume: -80
+  maximvolume: 20
 --- !u!4 &1907480908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4840192326537200, guid: ecb394f1259225d4a92f1db52419cd15,
