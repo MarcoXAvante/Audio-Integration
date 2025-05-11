@@ -3,7 +3,6 @@
 [RequireComponent(typeof(CharacterController))]
 public class FreeCameraController : MonoBehaviour
 {
-    public FootstepSurfaceDetector surfaceDetector;
 
     [Header("Movement")]
     public float movementSpeed = 1f;
@@ -17,10 +16,8 @@ public class FreeCameraController : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource footstepSource;
-    public AudioClip woodFootstepClip;
-    public AudioClip stoneFootstepClip;
+    public AudioClip FootstepClip;
     public float footstepInterval = 0.5f;
-    public float surfaceCheckDistance = 1.5f;
 
     CharacterController cc;
     float yaw;
@@ -42,15 +39,17 @@ public class FreeCameraController : MonoBehaviour
         HandleLook();
         HandleMovementWithGravity();
     }
-    AudioClip GetFootstepClipBySurface()
+
+    void PlayFootstep()
     {
-        switch (surfaceDetector.currentSurfaceTag)
+        if (footstepSource != null && FootstepClip != null)
         {
-            case "Wood": return woodFootstepClip;
-            case "Stone": return stoneFootstepClip;
-            default: return null;
+            footstepSource.pitch = Random.Range(0.95f, 1.05f);
+            footstepSource.clip = FootstepClip;
+            footstepSource.Play();
         }
     }
+
     void HandleLook()
     {
         yaw += Input.GetAxis("Mouse X") * lookSensitivity;
@@ -80,10 +79,7 @@ public class FreeCameraController : MonoBehaviour
             footstepTimer -= Time.deltaTime;
             if (footstepTimer <= 0f)
             {
-                AudioClip clipToPlay = GetFootstepClipBySurface();
-                if (clipToPlay != null)
-                    footstepSource.PlayOneShot(clipToPlay);
-
+                PlayFootstep();
                 footstepTimer = footstepInterval;
             }
         }
