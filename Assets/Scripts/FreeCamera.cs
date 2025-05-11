@@ -3,6 +3,8 @@
 [RequireComponent(typeof(CharacterController))]
 public class FreeCameraController : MonoBehaviour
 {
+    public FootstepSurfaceDetector surfaceDetector;
+
     [Header("Movement")]
     public float movementSpeed = 1f;
     public float gravity = 9.81f;
@@ -42,26 +44,12 @@ public class FreeCameraController : MonoBehaviour
     }
     AudioClip GetFootstepClipBySurface()
     {
-        Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, surfaceCheckDistance))
+        switch (surfaceDetector.currentSurfaceTag)
         {
-            // By tag
-            if (hit.collider.CompareTag("Wood"))
-                return woodFootstepClip;
-            if (hit.collider.CompareTag("Stone"))
-                return stoneFootstepClip;
-
-            // Or by material name (if using PhysicMaterials)
-            /*
-            if (hit.collider.sharedMaterial != null)
-            {
-                string matName = hit.collider.sharedMaterial.name;
-                if (matName.Contains("Wood")) return woodFootstepClip;
-                if (matName.Contains("Stone")) return stoneFootstepClip;
-            }
-            */
+            case "Wood": return woodFootstepClip;
+            case "Stone": return stoneFootstepClip;
+            default: return null;
         }
-        return null; // Fallback if no match
     }
     void HandleLook()
     {
