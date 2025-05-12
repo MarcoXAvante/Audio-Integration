@@ -14,6 +14,9 @@ public class VolumeButton : MonoBehaviour
     public float minimvolume = -80f;
     public float maximvolume = 20f;
 
+    private bool musicMuted = false;
+    private float musicLastVolume = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +65,11 @@ public class VolumeButton : MonoBehaviour
         {
             Adjustvolume(vo, -stepsize);
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleMusicMute();
+        }
     }
     
     void Adjustvolume(string name, float newvolume)
@@ -70,5 +78,27 @@ public class VolumeButton : MonoBehaviour
         float newdb = Mathf.Clamp((todobien ? volume : 0f) + newvolume, minimvolume, maximvolume);
         audioMixer.SetFloat(name, newdb);
         Debug.Log($"{name} es ahora {newdb}");
+
+        if (name == music && !musicMuted)
+            musicLastVolume = newdb;
+    }
+
+    void ToggleMusicMute()
+    {
+        if (!musicMuted)
+        {
+            if (audioMixer.GetFloat(music, out float current))
+                musicLastVolume = current;
+
+            audioMixer.SetFloat(music, minimvolume);
+            musicMuted = true;
+            Debug.Log("Music muted");
+        }
+        else
+        {
+            audioMixer.SetFloat(music, musicLastVolume);
+            musicMuted = false;
+            Debug.Log($"Music unmuted: restored to {musicLastVolume} dB");
+        }
     }
 }
