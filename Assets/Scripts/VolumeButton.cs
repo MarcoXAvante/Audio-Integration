@@ -15,6 +15,7 @@ public class VolumeButton : MonoBehaviour
     public float maximvolume = 20f;
 
     private bool musicMuted = false;
+    private bool isMuffled = false;
     private float musicLastVolume = 0f;
 
     // Start is called before the first frame update
@@ -70,17 +71,37 @@ public class VolumeButton : MonoBehaviour
         {
             ToggleMusicMute();
         }
-    }
-    
-    void Adjustvolume(string name, float newvolume)
-    {
-        bool todobien = audioMixer.GetFloat(name, out float volume);
-        float newdb = Mathf.Clamp((todobien ? volume : 0f) + newvolume, minimvolume, maximvolume);
-        audioMixer.SetFloat(name, newdb);
-        Debug.Log($"{name} es ahora {newdb}");
 
-        if (name == music && !musicMuted)
-            musicLastVolume = newdb;
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            ToggleMuffled();
+        }
+    }
+
+    void Adjustvolume(string name, float step)
+    {
+        if (audioMixer.GetFloat(name, out float currentDb))
+        {
+            float currentLinear = Mathf.Pow(10f, currentDb / 20f);
+
+            float newLinear = currentLinear + (step * 0.01f);
+
+            newLinear = Mathf.Clamp(newLinear, 0.0001f, 10f);
+
+            if (Mathf.Approximately(newLinear, 0.0001f) && step < 0f)
+            {
+                Debug.Log($"{name} is already at minimum volume.");
+                return;
+            }
+
+            float newDb = Mathf.Clamp(Mathf.Log10(newLinear) * 20f, minimvolume, maximvolume);
+            audioMixer.SetFloat(name, newDb);
+
+            Debug.Log($"{name} volume changed to {newDb} dB (linear: {newLinear})");
+
+            if (name == music && !musicMuted)
+                musicLastVolume = newDb;
+        }
     }
 
     void ToggleMusicMute()
@@ -99,6 +120,19 @@ public class VolumeButton : MonoBehaviour
             audioMixer.SetFloat(music, musicLastVolume);
             musicMuted = false;
             Debug.Log($"Music unmuted: restored to {musicLastVolume} dB");
+        }
+    }
+
+    void ToggleMuffled()
+    {
+        if (isMuffled)
+        {
+            audioMixer.FindSnapshot("Normal").TransitionTo(0.5f);
+            isMuffled = false;
+        } else
+        {
+            audioMixer.FindSnapshot("Muffled").TransitionTo(0.5f);
+            isMuffled = true;
         }
     }
 }
