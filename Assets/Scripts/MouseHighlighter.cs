@@ -19,12 +19,11 @@ public class MouseHighlighter : MonoBehaviour
     }
 
     private List<MaterialState> lastStates = new List<MaterialState>();
-    private Camera cam;
+    public Camera cam;
     private Transform currentTarget;
 
     void Start()
     {
-        cam = GetComponent<Camera>();
         if (cam == null)
             Debug.LogError("MouseHighlighter requires a Camera on the same GameObject.");
     }
