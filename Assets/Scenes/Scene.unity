@@ -10771,8 +10771,8 @@ MonoBehaviour:
   controller: {fileID: 194107520}
   animator: {fileID: 194107522}
   audioSource: {fileID: 194107525}
-  woodStep: {fileID: 8300000, guid: 158d910a96ba9874aa3b20210edcb0d1, type: 3}
-  stoneStep: {fileID: 8300000, guid: f86c13b564a74424cad61b5179f8ed5b, type: 3}
+  woodStep: {fileID: 8300000, guid: 207edd4cbca112c4988278ce1a608d6d, type: 3}
+  stoneStep: {fileID: 8300000, guid: dfb2f333796857e4892145e8a9007126, type: 3}
   gravity: -9.81
   groundCheckDistance: 0.4
   groundMask:
