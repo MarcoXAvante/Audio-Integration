@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-    // Start is called before the first frame update
     public AudioClip clock;
     private AudioSource audio;
 

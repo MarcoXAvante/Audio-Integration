@@ -9,7 +9,7 @@ public class MouseHighlighter : MonoBehaviour
     public float blendAmount = 0.25f;
     public Color highlightColor = Color.yellow;
     public float maxDistance = 100f;
-
+    public PauseManager pauseManager;
     struct MaterialState
     {
         public Material mat;
@@ -30,6 +30,9 @@ public class MouseHighlighter : MonoBehaviour
 
     void Update()
     {
+        if (pauseManager.isPaused)
+            return;
+
         foreach (var st in lastStates)
         {
             if (st.mat == null) continue;
