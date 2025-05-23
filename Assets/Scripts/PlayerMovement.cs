@@ -82,10 +82,12 @@ public class PlayerMovement : MonoBehaviour
         switch (currentSurface)
         {
             case "Wood":
-                audioSource.PlayOneShot(woodStep);
+                audioSource.pitch = Random.Range(0.6f, 0.9f);
+                audioSource.PlayOneShot(woodStep, Random.Range(0.8f, 1.4f));
                 break;
             case "Stone":
-                audioSource.PlayOneShot(stoneStep);
+                audioSource.pitch = Random.Range(0.6f, 0.9f);
+                audioSource.PlayOneShot(stoneStep, Random.Range(0.8f, 1.4f));
                 break;
             default:
                 break;
